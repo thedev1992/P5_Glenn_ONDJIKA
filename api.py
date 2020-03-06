@@ -36,7 +36,7 @@ class Api_data:
         for product in all_products:
             categorie = product['categories']
             stores = product['stores']
-            barcode = product['id']
+            barcode = product['code']
             name = product['product_name_fr']
             url = product['url']
             nutrition_grade = product['nutrition_grade_fr']
