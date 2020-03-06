@@ -36,7 +36,7 @@ class Api_data:
         for product in all_products:
             categorie = product['categories']
             stores = product['stores']
-            barcode = product['code']
+            barcode = product['id']
             name = product['product_name_fr']
             url = product['url']
             nutrition_grade = product['nutrition_grade_fr']
@@ -44,7 +44,7 @@ class Api_data:
             key = (barcode, stores, name, url, nutrition_grade, categorie, description)
             final_selected_product.append(key)
 
-        return pprint(final_selected_product)
+        return final_selected_product
 
 def main():
 
