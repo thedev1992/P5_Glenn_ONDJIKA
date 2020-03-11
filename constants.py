@@ -2,10 +2,10 @@ import mysql.connector
 
 db = mysql.connector.connect(host="localhost", user="root", password="" ,database="projet5")
 
-CATEGORIES = ['Sandwichs',
-              'Conserves',
-              'Viandes',
-              'Plats préparés',
-              'Snacks']
+CATEGORIES = ['spaghetti',
+              'pizza',
+              'fromage',
 
-quantity = 15
+                        ]
+
+quantity = 20

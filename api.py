@@ -18,7 +18,7 @@ class Api_data:
                        "tagtype_0": "categories",
                        "tag_contains_0": "contains",
                        "tag_0": category,
-                       "page_size": quantity
+                       "page_size": 30
                        }
 
         response = requests.get(api, params=payload)
@@ -29,25 +29,19 @@ class Api_data:
     def final_response(self,all_products):
         final_selected_product = []
 
-        keys = ['id', 'product_name_fr',
-                'categories', 'url', 'nutrition_grade_fr',
-                'stores', 'generic_name_fr']
-
         for product in all_products:
-            categorie = product['categories']
-            stores = product['stores']
-            barcode = product['id']
+            categories = product['categories']
             name = product['product_name_fr']
-            url = product['url']
             nutrition_grade = product['nutrition_grade_fr']
+            url = product['url']
             description = product['generic_name_fr']
-            key = (barcode, stores, name, url, nutrition_grade, categorie, description)
+            stores = product['stores']
+            barcode = product['code']
+            key = (barcode, name,nutrition_grade, url,description,stores,categories)
             final_selected_product.append(key)
-
         return final_selected_product
 
 def main():
-
     data_collect = Api_data()
     api_connection = data_collect.connect_and_sort()
     data_collect.final_response(api_connection)
