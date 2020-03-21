@@ -31,7 +31,7 @@ class Category(DbManager):
             print(x, ':', result[0])
             x += 1
 
-    def propostion(self, category_id):
+    def proposition(self,category_id):
 
         self.mycursor.execute("""SELECT product_name_fr, url, generic_name_fr, store_name, code \
                     FROM Products \
@@ -42,8 +42,8 @@ class Category(DbManager):
                     INNER JOIN products_stores \
                     ON Products.code = products_stores.product_id \
                     INNER JOIN Store \
-                    ON Store.id = Store_product.store_id \
-                    WHERE id = %s""", (category_id,))
+                    ON Store.id = products_stores.store_id \
+                    WHERE category_id = %s""", (category_id,))
         myresult = self.mycursor.fetchall()
         random_product = random.choice(myresult)
         print('Pour remplacer ce produit, nous vous proposons : ', random_product[0], '\n',

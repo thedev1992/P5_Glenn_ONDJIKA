@@ -17,17 +17,19 @@ def category_menu(number_category):
         print("Erreur : Entrer un numéro valide.")
         category_menu(number_category)
 
+
 def product_menu(products, category_choice):
+
     choice = input("\nEntrez le numéro de l'aliment : ")
     if choice in products:
-        proposition = self.t_product.proposition(choice, category_choice)
-                if proposition:
-                    self.save_menu(choice, proposition)
+        proposition = db_product.proposition(choice)
+        if proposition:
+            save_menu(choice, proposition)
         else:
-            self.select_product_menu(products, category_choice)
+            product_menu(choice)
 
-        else:
-            print("Erreur : Entrer un numéro valide.")
-            self.select_product_menu(products, category_choice)
+    else:
+        print("Erreur : Entrer un numéro valide.")
+        product_menu(products, category_choice)
 
 

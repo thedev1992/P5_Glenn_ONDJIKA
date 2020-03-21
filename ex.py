@@ -7,4 +7,4 @@ from function_main import *
 
 
 db = Category()
-db.show_product(5)
+db.proposition(5)
