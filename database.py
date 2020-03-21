@@ -11,7 +11,7 @@ class DbManager:
     def createDatabase(self):
         try:
             self.mycursor = db.cursor()
-            self.mycursor.execute("CREATE DATABASE ")
+            self.mycursor.execute("CREATE DATABASE IF NOT EXITS ")
             return True
         except Exception as e:
             return e

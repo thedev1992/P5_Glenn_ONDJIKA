@@ -81,8 +81,8 @@ class Save(DbManager):
             SELECT Product.product_name_fr
             FROM Products
             INNER JOIN favorites
-            ON Products.id = Save.id_substitute
-            WHERE Products.id = Save.id_substitute
+            ON Products.id = favorites.id_substitute
+            WHERE Products.id = favorites.id_substitute
             ORDER BY favorites.id;""")
         new_products = self.mycursor.fetchall()
 
