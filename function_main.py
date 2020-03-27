@@ -2,7 +2,7 @@ from database import *
 from database import *
 from user import *
 from constants import *
-from main import *
+
 
 db_product = Category()
 save = Save()
@@ -19,19 +19,15 @@ def category_menu(number_category):
         category_menu(number_category)
 
 
-def product_menu(products, category_choice):
+def product_menu(products):
 
     choice = input("\nEntrez le numéro de l'aliment : ")
-    if choice in products:
+    if int(choice) <= len(products):
         proposition = db_product.proposition(choice)
-        if proposition:
-            save.save_products(choice, proposition)
-        else:
-            product_menu(choice)
-
+        save_menu(choice, proposition)
     else:
         print("Erreur : Entrer un numéro valide.")
-        product_menu(products, category_choice)
+        product_menu(products)
 
 
 def save_menu(product, new_product):
@@ -44,15 +40,17 @@ def save_menu(product, new_product):
     choice = input("\nVotre choix : ")
     if choice == "1":
         save.save_products(product, new_product)
-        fmain()
+        main()
 
     elif choice == "2":
         categories = db.show_category()
         category_menu(categories)
 
     elif choice == "3":
-        fmain()
+        main()
 
     else:
         print("Erreur : Entrer un numéro valide.")
         save_menu(product, new_product)
+
+

@@ -3,14 +3,15 @@ import mysql.connector
 from database import DbManager
 from api import *
 from user import *
-from function_main import *
+from function_main import category_menu
 
 db = Category()
-
+save = Save()
 
 main_loop = True
 
-def fmain():
+
+def main():
 
     main_loop = True
 
@@ -24,12 +25,14 @@ def fmain():
             categories = db.show_category()
             category_menu(categories)
 
+        elif choice == 2:
+            save.show_new_products()
+            main()
+
         else:
             print("Erreur : Entrer un numéro valide.")
-            fmain()
-
-        main_loop = False
+            main()
 
 
-
-fmain()
+if __name__ == '__main__':
+    main()

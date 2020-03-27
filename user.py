@@ -30,6 +30,7 @@ class Category(DbManager):
         for result in myresult:
             print(x, ':', result[0])
             x += 1
+        return myresult
 
     def proposition(self,category_id):
 
@@ -58,39 +59,45 @@ class Save(DbManager):
         """ Register products in the database. """
         try:
             self.mycursor.execute("""
-                INSERT INTO favorites (id_product, id_subsitute)
+                INSERT INTO favorites (id_product, id_substitute)
                 VALUES (%s, %s)""",(product_id, new_product_id))
             print("\nVotre choix est enregistré.")
 
         except mysql.connector.errors.IntegrityError as e:
-            print("\nCe choix est déjà enregistré.")
+            print(e)
 
     def show_new_products(self):
         """ Display the products registered in the database. """
 
-        self.mycursor.execute("""
-            SELECT Products.product_name_fr
-            FROM Products
-            INNER JOIN favorites
-            ON Products.id = favorites.id_product
-            WHERE Products.id = favorites.id_product
-            ORDER BY favorites.id;""")
-        products = self.mycursor.fetchall()
+        self.mycursor.execute("""SELECT product_name_fr\
+                    FROM Products \
+                    INNER JOIN products_categories_key \
+                    ON Products.code = products_categories_key.product_id \
+                    INNER JOIN Category \
+                    ON Category.id = products_categories_key.category_id \
+                    INNER JOIN favorites
+                    ON category.id = favorites.id_product
+                    WHERE category.id = favorites.id_product
+                    """,)
+        product = self.mycursor.fetchall()
 
-        self.mycursor.execute("""
-            SELECT Product.product_name_fr
-            FROM Products
-            INNER JOIN favorites
-            ON Products.id = favorites.id_substitute
-            WHERE Products.id = favorites.id_substitute
-            ORDER BY favorites.id;""")
-        new_products = self.mycursor.fetchall()
+        self.mycursor.execute("""SELECT product_name_fr\
+                            FROM Products \
+                            INNER JOIN products_categories_key \
+                            ON Products.code = products_categories_key.product_id \
+                            INNER JOIN Category \
+                            ON Category.id = products_categories_key.category_id \
+                            INNER JOIN favorites
+                            ON category.id = favorites.id_substitute
+                            WHERE category.id = favorites.id_substitute
+                            """, )
+        substitute = self.mycursor.fetchall()
 
-        if not products:
+        if not product:
             print("\nVous n'avez rien enregistré.")
-        else:
-            for p_name, n_name in zip(products, new_products):
-                print(p_name[0], "est remplacé par", n_name[0])
+
+        for product_name, substitutes_name in zip(product, substitute):
+            print(product_name[0], "a été remplacé par", substitutes_name[0],".")
 
 
 def main():
