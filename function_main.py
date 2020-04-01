@@ -7,27 +7,30 @@ from constants import *
 db_product = Category()
 save = Save()
 
+
 def category_menu(number_category):
 
     category_choice = input("\nEntrez le numéro de la catégorie: ")
     if category_choice in number_category:
         products = db_product.show_product(category_choice)
-        product_menu(products)
 
     else:
         print("Erreur : Entrer un numéro valide.")
         category_menu(number_category)
 
 
-def product_menu(products):
-
     choice = input("\nEntrez le numéro de l'aliment : ")
+
     if int(choice) <= len(products):
-        proposition = db_product.proposition(choice)
-        save_menu(choice, proposition)
+        db_product.proposition(choice)
+        save_menu(category_choice, choice)
     else:
         print("Erreur : Entrer un numéro valide.")
-        product_menu(products)
+        choice = input("\nEntrez le numéro de l'aliment : ")
+        if int(choice) <= len(products):
+            db_product.proposition(choice)
+            print(choice)
+            save_menu(category_choice, choice)
 
 
 def save_menu(product, new_product):

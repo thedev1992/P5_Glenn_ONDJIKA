@@ -7,7 +7,7 @@ from function_main import category_menu
 
 db = Category()
 save = Save()
-
+"""
 main_loop = True
 
 
@@ -27,12 +27,14 @@ def main():
 
         elif choice == 2:
             save.show_new_products()
-            main()
 
         else:
             print("Erreur : Entrer un numéro valide.")
-            main()
+
 
 
 if __name__ == '__main__':
-    main()
+    main()"""
+
+save.proposition()
+
