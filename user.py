@@ -3,16 +3,29 @@ import mysql.connector
 from database import DbManager
 from api import *
 
+"""
+    Make requests in the database.
+"""
+
 
 class Category(DbManager):
+    """
+        this class inherit from Dbmanger class.
+        This class performs operations in the table class : Category, product.
+    """
 
     def show_category(self):
+        """ Display categories. """
+
         self.mycursor.execute(""" SELECT id, category_name from category WHERE id ORDER BY id LIMIT 6 ; """)
         results = self.mycursor.fetchall()
 
         return results
 
     def show_product(self):
+
+        """ Display the products of a category. """
+
         self.mycursor.execute("""SELECT product_name_fr, code \
                 FROM Products \
                 INNER JOIN products_categories_key\
@@ -25,6 +38,9 @@ class Category(DbManager):
         return myresult
 
     def product_chosen(self, _id):
+
+        """ Display the selected product. """
+
         self.mycursor.execute("""SELECT product_name_fr \
                         FROM Products \
                         INNER JOIN products_categories_key\
@@ -37,8 +53,11 @@ class Category(DbManager):
 
 
 class Save(DbManager):
+    """ This class performs perform for the management of the saved product """
 
     def proposition(self):
+
+        """ Select a new product at random. """
 
         self.mycursor.execute("""SELECT category_id, product_name_fr, url, generic_name_fr, store_name, code \
                     FROM Products \
@@ -55,12 +74,13 @@ class Save(DbManager):
 
         return myresult
 
-    def save_menu(self,product_id,id_substitut):
+    def save_menu(self,product_id,id_substitute):
+        """ Register products in the database. """
 
         try:
             self.mycursor.execute("""
                 INSERT INTO favorites (id_product, id_substitute)
-                VALUES (%s, %s)""",(product_id, id_substitut))
+                VALUES (%s, %s)""",(product_id, id_substitute))
             print("\nVotre choix est enregistré.")
 
         except mysql.connector.errors.IntegrityError as e:
@@ -80,6 +100,10 @@ class Save(DbManager):
                     WHERE category.id = favorites.id_product
                     """,)
         product = self.mycursor.fetchall()
+        return product
+
+    def substitute(self):
+        """ Display the substitute registered in the database. """
 
         self.mycursor.execute("""SELECT product_name_fr\
                             FROM Products \
@@ -93,7 +117,7 @@ class Save(DbManager):
                             """, )
         substitute = self.mycursor.fetchall()
 
-        return substitute, product
+        return substitute
 
 
 
