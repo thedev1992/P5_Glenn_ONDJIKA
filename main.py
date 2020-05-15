@@ -1,8 +1,7 @@
 import random
 import mysql.connector
-from database import DbManager
-from api import *
-from user import *
+from constants import menu_presentation, save_presentation
+from user import Category, Product, Save
 
 """
     This file starts the program.
@@ -10,6 +9,7 @@ from user import *
 
 db = Category()
 save = Save()
+product = Product()
 
 
 def main():
@@ -43,7 +43,6 @@ def main():
                 for product_name, substitutes_name in zip(saved_product, saved_substitute):
                     print(product_name[0], "a été remplacé par", substitutes_name[0], ".")
 
-
         else:
             print("Erreur : Entrer un numéro valide.")
 
@@ -71,7 +70,7 @@ def product_menu():
     second_loop = True
     while second_loop:
         print('\n ------------------ Choisissez un aliment à remplaçer -------------------')
-        products = db.show_product()
+        products = product.show_product()
         x = 1
         print("Voici la sélection de produits : ")
         for result in products:
@@ -80,14 +79,15 @@ def product_menu():
 
             """ Choice product """
         choices = input("\nEntrez le numéro de l'aliment : ")
-        product_chosen = db.product_chosen(choices)
+        product_chosen = product.product_chosen(choices)
         for name in product_chosen:
             print("\nle produit choisis est :", name[0])
             print()
 
-        """ Choose a product  substitute and save in the data base """
+        """ Choose a product substitute and save in the data base """
         if int(choices) <= len(products):
-            proposition = save.proposition()
+            """ select the substitute with the best grades for the product """
+            proposition = save.selected_by_nutrition_grade()
             random_product = random.choice(proposition)
             print('ID du produit de substitution: ', random_product[0], '\n',
                   'Pour remplacer ce produit, nous vous proposons : ', random_product[1], '\n',

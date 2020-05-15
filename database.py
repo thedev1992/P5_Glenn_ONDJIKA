@@ -1,6 +1,6 @@
 import mysql.connector
-from constants import *
-from api import *
+from constants import db
+from api import Api
 
 
 class DbManager:
@@ -28,37 +28,34 @@ class DbManager:
         try:
             self.mycursor = db.cursor()
             return True
-        except:
-            return False
+        except Exception as e:
+            return e
 
     def create_table(self):
         """ Create table Products """
         try:
             self.mycursor.execute("""CREATE TABLE IF NOT EXISTS products(
-	                                      id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	                                      code BIGINT UNSIGNED NOT NULL UNIQUE,
-	                                      product_name_fr VARCHAR(150) NOT NULL ,
-	                                      nutrition_grade_fr CHAR(1) NOT NULL,
-	                                      url VARCHAR(400),
-	                                      generic_name_fr VARCHAR(400)); 
-	                                   """)
+id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+code BIGINT UNSIGNED NOT NULL UNIQUE,
+product_name_fr VARCHAR(150) NOT NULL ,
+nutrition_grade_fr CHAR(1) NOT NULL,
+url VARCHAR(400),
+generic_name_fr VARCHAR(400)); """)
         except Exception as e:
             return e
 
         """ Create table store """
         try:
             self.mycursor.execute("""CREATE TABLE IF NOT EXISTS store(
-	                                 id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	                                 store_name VARCHAR(150) UNIQUE NOT NULL);
-	                              """)
+id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+store_name VARCHAR(150) UNIQUE NOT NULL);""")
         except Exception as e:
             return e
         """ Create table category """
         try:
             self.mycursor.execute("""CREATE TABLE IF NOT EXISTS Category (
-    	                                 id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    	                                 category_name VARCHAR(150) UNIQUE);
-    	                              """)
+id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ategory_name VARCHAR(150) UNIQUE);""")
         except Exception as e:
             return e
 
