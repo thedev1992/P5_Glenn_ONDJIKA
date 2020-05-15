@@ -1,5 +1,4 @@
 import random
-import mysql.connector
 from constants import menu_presentation, save_presentation
 from user import Category, Product, Save
 
