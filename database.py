@@ -1,5 +1,5 @@
 import mysql.connector
-from constants import db
+from constants import *
 from api import Api
 
 

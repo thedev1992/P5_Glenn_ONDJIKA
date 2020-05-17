@@ -1,6 +1,8 @@
-import random
-from constants import menu_presentation, save_presentation
-from user import Category, Product, Save
+from function import menu_presentation, save_presentation,substitute_propostion
+from constants import db
+from category import Product, Category
+from user import Save
+
 
 """
     This file starts the program.
@@ -85,14 +87,8 @@ def product_menu():
 
         """ Choose a product substitute and save in the data base """
         if int(choices) <= len(products):
-            """ select the substitute with the best grades for the product """
-            proposition = save.selected_by_nutrition_grade()
-            random_product = random.choice(proposition)
-            print('ID du produit de substitution: ', random_product[0], '\n',
-                  'Pour remplacer ce produit, nous vous proposons : ', random_product[1], '\n',
-                  'La description de ce produit est : ', random_product[3], '\n',
-                  'Il est disponible dans le(s) magasin(s) suivant(s) : ', random_product[4], '\n',
-                  'Son url est la suivante : ', random_product[2])
+            # propose a better susbstitution prouct for the product chosen
+            substitute_propostion(choices)
 
             save_presentation()
 
